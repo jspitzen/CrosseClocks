@@ -1,41 +1,58 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
+using System.Windows.Media;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using CrosseClocks.Resources;
+using System.Globalization;
 
 namespace CrosseClocks
 {
     public partial class MainPage : PhoneApplicationPage
     {
+        /// <summary>
+        /// The gameClock keeps track of the elapsed time in the game.
+        /// </summary>
+        Stopwatch gameClock;
+
+        /// <summary>
+        /// The ticker ensures screen updates are regularly called.
+        /// </summary>
+        DispatcherTimer ticker;
+
+        private const string format = "mm\\:ss\\.f";
         // Constructor
         public MainPage()
         {
             InitializeComponent();
+            gameClock = new Stopwatch();
 
-            // Sample code to localize the ApplicationBar
-            //BuildLocalizedApplicationBar();
+            ticker = new DispatcherTimer();
+            ticker.Interval = TimeSpan.FromMilliseconds(Settings.TICK_TIME);
+            ticker.Tick += ticker_Tick;
+            ticker.Start();
+
+            txtGameClock.Text = gameClock.Elapsed.ToString(format);
         }
 
-        // Sample code for building a localized ApplicationBar
-        //private void BuildLocalizedApplicationBar()
-        //{
-        //    // Set the page's ApplicationBar to a new instance of ApplicationBar.
-        //    ApplicationBar = new ApplicationBar();
+        void ticker_Tick(object sender, EventArgs e)
+        {
+            txtGameClock.Text = gameClock.Elapsed.ToString(format);
+        }
 
-        //    // Create a new button and set the text value to the localized string from AppResources.
-        //    ApplicationBarIconButton appBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.add.rest.png", UriKind.Relative));
-        //    appBarButton.Text = AppResources.AppBarButtonText;
-        //    ApplicationBar.Buttons.Add(appBarButton);
-
-        //    // Create a new menu item with the localized string from AppResources.
-        //    ApplicationBarMenuItem appBarMenuItem = new ApplicationBarMenuItem(AppResources.AppBarMenuItemText);
-        //    ApplicationBar.MenuItems.Add(appBarMenuItem);
-        //}
+        private void txtGameClock_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            if (gameClock.IsRunning)
+            {
+                gameClock.Stop();
+            }
+            else
+            {
+                gameClock.Start();
+            }
+        }
     }
 }
