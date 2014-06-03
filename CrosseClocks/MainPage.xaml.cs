@@ -38,11 +38,21 @@ namespace CrosseClocks
             txtGameClock.Text = gameClock.Elapsed.ToString(format);
         }
 
+        /// <summary>
+        /// Updates the gameClock TextBlock.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void ticker_Tick(object sender, EventArgs e)
         {
             txtGameClock.Text = gameClock.Elapsed.ToString(format);
         }
 
+        /// <summary>
+        /// Event handler for when the main game clock is tapped, toggles the running state of the clock.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void txtGameClock_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             if (gameClock.IsRunning)
