@@ -31,7 +31,7 @@ namespace CrosseClocks
             gameClock = new Stopwatch();
 
             ticker = new DispatcherTimer();
-            ticker.Interval = TimeSpan.FromMilliseconds(Settings.TICK_TIME);
+            ticker.Interval = TimeSpan.FromSeconds(Settings.TICK_TIME);
             ticker.Tick += ticker_Tick;
             ticker.Start();
 

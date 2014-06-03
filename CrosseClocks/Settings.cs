@@ -11,7 +11,7 @@ namespace CrosseClocks
         /// <summary>
         /// The time in seconds each tick takes.
         /// </summary>
-        public const double TICK_TIME = 0.1;
+        public const double TICK_TIME = 0.01;
 
         /// <summary>
         /// The number of minutes in a quarter of the match.
